@@ -8,3 +8,6 @@ run-payment-api:
 
 run-auth-api:
 	go run authorization/main.go
+
+run-faker:
+	go run faker/main.go
