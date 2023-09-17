@@ -1,0 +1,5 @@
+curl --location 'http://localhost:8081/authorization' \
+--header 'Content-Type: application/json' \
+--data '{
+    "userId": "123",
+}'

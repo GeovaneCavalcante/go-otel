@@ -1,0 +1,7 @@
+curl --location 'http://localhost:8080/payment' \
+--header 'Content-Type: application/json' \
+--data '{
+    "userId": "123",
+    "productId": "5454",
+    "amount": 12000
+}'
