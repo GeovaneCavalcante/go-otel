@@ -73,8 +73,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -86,101 +85,9 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 8,
-                "w": 12,
+                "h": 15,
+                "w": 24,
                 "x": 0,
-                "y": 0
-            },
-            "id": 9,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
-                    "editorMode": "builder",
-                    "expr": "tpv",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "TPV",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 12,
-                "x": 12,
                 "y": 0
             },
             "id": 7,
@@ -203,8 +110,8 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "init_auth",
-                    "legendFormat": "__auto",
+                    "expr": "sum(idelta(init_auth[5m]))",
+                    "legendFormat": "total de auths",
                     "range": true,
                     "refId": "A"
                 },
@@ -214,9 +121,9 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "error_auth",
+                    "expr": "sum(idelta(error_auth[5m]))",
                     "hide": false,
-                    "legendFormat": "__auto",
+                    "legendFormat": "erros de auth",
                     "range": true,
                     "refId": "B"
                 }
@@ -269,8 +176,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -282,10 +188,10 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 8,
-                "w": 12,
+                "h": 13,
+                "w": 24,
                 "x": 0,
-                "y": 8
+                "y": 15
             },
             "id": 6,
             "options": {
@@ -307,8 +213,8 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "init_payment",
-                    "legendFormat": "__auto",
+                    "expr": "sum(idelta(init_payment[5m]))",
+                    "legendFormat": "total de pagamentos",
                     "range": true,
                     "refId": "A"
                 },
@@ -318,17 +224,355 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "error_payment",
+                    "expr": "sum by(error) (idelta(error_payment{error=\"amount must be positive and greater than zero\"}[5m]))",
                     "hide": false,
-                    "legendFormat": "__auto",
+                    "legendFormat": "{{error}}",
                     "range": true,
                     "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by(error) (idelta(error_payment{error=\"error authorizing user\"}[5m]))",
+                    "hide": false,
+                    "legendFormat": "{{error}}",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by(error) (idelta(error_payment{error=\"productId cannot be an empty string\"}[5m]))",
+                    "hide": false,
+                    "legendFormat": "{{error}}",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum(idelta(error_payment[5m]))",
+                    "hide": false,
+                    "legendFormat": "total de erros",
+                    "range": true,
+                    "refId": "E"
                 }
             ],
             "title": "Pagamentos",
+            "transformations": [
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "pagamentos com sucesso",
+                        "binary": {
+                            "left": "total de pagamentos",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "total de erros"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                }
+            ],
             "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "currencyBRL"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 11,
+                "w": 12,
+                "x": 0,
+                "y": 28
+            },
+            "id": 9,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum(tpv)",
+                    "legendFormat": "tpv total",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by(productId) (tpv{productId=\"123\"})",
+                    "hide": false,
+                    "legendFormat": "{{productId}}",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by(productId) (tpv{productId=\"445\"})",
+                    "hide": false,
+                    "legendFormat": "{{productId}}",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by(productId) (tpv{productId=\"789\"})",
+                    "hide": false,
+                    "legendFormat": "{{productId}}",
+                    "range": true,
+                    "refId": "D"
+                }
+            ],
+            "title": "TPV",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    },
+                    "mappings": []
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 11,
+                "w": 12,
+                "x": 12,
+                "y": 28
+            },
+            "id": 11,
+            "options": {
+                "displayLabels": [
+                    "percent"
+                ],
+                "legend": {
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "rate(tpv{productId=\"123\"}[5m])",
+                    "legendFormat": "{{productId}}",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "rate(tpv{productId=\"445\"}[5m])",
+                    "hide": false,
+                    "legendFormat": "{{productId}}",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "rate(tpv{productId=\"789\"}[5m])",
+                    "hide": false,
+                    "legendFormat": "{{productId}}",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "TPV por produto",
+            "type": "piechart"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "continuous-RdYlGr"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "currencyBRL"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 0,
+                "y": 39
+            },
+            "id": 13,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "9.1.7",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by() (tpv)",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "TPV Hoje",
+            "type": "stat"
         }
     ],
+    "refresh": false,
     "schemaVersion": 37,
     "style": "dark",
     "tags": [],
@@ -336,8 +580,8 @@
         "list": []
     },
     "time": {
-        "from": "now-15m",
-        "to": "now"
+        "from": "2023-09-19T02:19:33.371Z",
+        "to": "2023-09-19T02:33:49.802Z"
     },
     "timepicker": {
         "hidden": true,
@@ -367,8 +611,8 @@
         "type": "timepicker"
     },
     "timezone": "browser",
-    "title": "Home",
+    "title": "Dash Demo",
     "uid": "gslPdbmSz",
-    "version": 6,
+    "version": 5,
     "weekStart": ""
 }
