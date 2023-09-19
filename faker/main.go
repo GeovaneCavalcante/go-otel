@@ -66,7 +66,7 @@ func main() {
 				postPayload(payload, &wg)
 			}()
 		}
+		wg.Wait()
 		fmt.Println("")
-		time.Sleep(4 * time.Second)
 	}
 }
