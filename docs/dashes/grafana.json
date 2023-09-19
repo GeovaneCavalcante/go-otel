@@ -69,11 +69,13 @@
                         }
                     },
                     "mappings": [],
+                    "min": 0,
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -110,7 +112,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "sum(idelta(init_auth[5m]))",
+                    "expr": "sum(delta(init_auth[5m]))",
                     "legendFormat": "total de auths",
                     "range": true,
                     "refId": "A"
@@ -121,7 +123,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "sum(idelta(error_auth[5m]))",
+                    "expr": "sum(delta(error_auth[5m]))",
                     "hide": false,
                     "legendFormat": "erros de auth",
                     "range": true,
@@ -172,11 +174,14 @@
                         }
                     },
                     "mappings": [],
+                    "min": 0,
+                    "noValue": "0",
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -213,7 +218,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "sum(idelta(init_payment[5m]))",
+                    "expr": "sum(delta(init_payment[5m]))",
                     "legendFormat": "total de pagamentos",
                     "range": true,
                     "refId": "A"
@@ -224,7 +229,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "sum by(error) (idelta(error_payment{error=\"amount must be positive and greater than zero\"}[5m]))",
+                    "expr": "sum by(error) (delta(error_payment{error=\"amount must be positive and greater than zero\"}[5m]))",
                     "hide": false,
                     "legendFormat": "{{error}}",
                     "range": true,
@@ -236,7 +241,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "sum by(error) (idelta(error_payment{error=\"error authorizing user\"}[5m]))",
+                    "expr": "sum by(error) (delta(error_payment{error=\"error authorizing user\"}[5m]))",
                     "hide": false,
                     "legendFormat": "{{error}}",
                     "range": true,
@@ -248,7 +253,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "sum by(error) (idelta(error_payment{error=\"productId cannot be an empty string\"}[5m]))",
+                    "expr": "sum by(error) (delta(error_payment{error=\"productId cannot be an empty string\"}[5m]))",
                     "hide": false,
                     "legendFormat": "{{error}}",
                     "range": true,
@@ -260,7 +265,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "sum(idelta(error_payment[5m]))",
+                    "expr": "sum(delta(error_payment[5m]))",
                     "hide": false,
                     "legendFormat": "total de erros",
                     "range": true,
@@ -333,7 +338,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -343,7 +349,34 @@
                     },
                     "unit": "currencyBRL"
                 },
-                "overrides": []
+                "overrides": [
+                    {
+                        "__systemRef": "hideSeriesFrom",
+                        "matcher": {
+                            "id": "byNames",
+                            "options": {
+                                "mode": "exclude",
+                                "names": [
+                                    "123",
+                                    "445",
+                                    "789"
+                                ],
+                                "prefix": "All except:",
+                                "readOnly": true
+                            }
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.hideFrom",
+                                "value": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": true
+                                }
+                            }
+                        ]
+                    }
+                ]
             },
             "gridPos": {
                 "h": 11,
@@ -365,17 +398,6 @@
                 }
             },
             "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum(tpv)",
-                    "legendFormat": "tpv total",
-                    "range": true,
-                    "refId": "A"
-                },
                 {
                     "datasource": {
                         "type": "prometheus",
@@ -473,7 +495,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "rate(tpv{productId=\"123\"}[5m])",
+                    "expr": "sum by(productId) (tpv{productId=\"123\"})",
                     "legendFormat": "{{productId}}",
                     "range": true,
                     "refId": "A"
@@ -484,7 +506,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "rate(tpv{productId=\"445\"}[5m])",
+                    "expr": "sum by(productId) (tpv{productId=\"445\"})",
                     "hide": false,
                     "legendFormat": "{{productId}}",
                     "range": true,
@@ -496,7 +518,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "builder",
-                    "expr": "rate(tpv{productId=\"789\"}[5m])",
+                    "expr": "sum by(productId) (tpv{productId=\"789\"})",
                     "hide": false,
                     "legendFormat": "{{productId}}",
                     "range": true,
@@ -521,7 +543,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -580,8 +603,8 @@
         "list": []
     },
     "time": {
-        "from": "2023-09-19T02:19:33.371Z",
-        "to": "2023-09-19T02:33:49.802Z"
+        "from": "now-15m",
+        "to": "now"
     },
     "timepicker": {
         "hidden": true,
@@ -613,6 +636,6 @@
     "timezone": "browser",
     "title": "Dash Demo",
     "uid": "gslPdbmSz",
-    "version": 5,
+    "version": 3,
     "weekStart": ""
 }
