@@ -17,6 +17,10 @@ type Payload struct {
 }
 
 func postPayload(payload Payload, wg *sync.WaitGroup) {
+
+	time.Sleep(time.Duration(rand.Intn(15)) * time.Second)
+
+
 	defer wg.Done()
 	url := "http://localhost:8080/payment"
 
@@ -63,6 +67,6 @@ func main() {
 			}()
 		}
 		fmt.Println("")
-		time.Sleep(5 * time.Second)
+		time.Sleep(4 * time.Second)
 	}
 }
